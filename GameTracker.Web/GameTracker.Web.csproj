@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GameTracker.Data\GameTracker.Data.csproj" />
+    <ProjectReference Include="..\GameTracker.Services\GameTracker.Services.csproj" />
     <ProjectReference Include="..\GameTracker.ViewModels\GameTracker.ViewModels.csproj" />
   </ItemGroup>
 
