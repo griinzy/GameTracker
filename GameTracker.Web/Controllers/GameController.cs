@@ -23,12 +23,6 @@ namespace GameTracker.Web.Controllers
             return View(games);
         }
 
-        [AllowAnonymous]
-        public async Task<IActionResult> Details(int id)
-        {
-            return View();
-        }
-
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -103,6 +97,62 @@ namespace GameTracker.Web.Controllers
             }
 
             await _gameService.AddDeveloperAsync(model);
+            return RedirectToAction("Index");
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(int id)
+        {
+            var game = await _gameService.GetGameDetailsByIdAsync(id);
+            if(game == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(game);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var game = await _gameService.GetGameForEditByIdAsync(id);
+            if (game == null)
+            {
+                return RedirectToAction("Index");
+            }
+            ViewBag.Genres = new SelectList(await _gameService.GetGenresAsync(), "Id", "Name");
+            ViewBag.Developers = new SelectList(await _gameService.GetDevelopersAsync(), "Id", "Name");
+            return View(game);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(GameEditViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View();
+            }
+            await _gameService.EditGameAsync(model);
+            return RedirectToAction("Details", new { id = model.Id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var game = await _gameService.GetGameForDeletionByIdAsync(id);
+            if (game == null)
+            {
+                return RedirectToAction("Index");
+            }
+            ViewBag.Genres = new SelectList(await _gameService.GetGenresAsync(), "Id", "Name");
+            ViewBag.Developers = new SelectList(await _gameService.GetDevelopersAsync(), "Id", "Name");
+            return View(game);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmDelete(int id)
+        {
+            await _gameService.DeleteGameAsync(id);
             return RedirectToAction("Index");
         }
     }

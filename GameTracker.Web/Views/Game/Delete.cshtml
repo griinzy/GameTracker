@@ -1,5 +1,31 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using GameTracker.ViewModels
+@model GameDeleteViewModel
+
+<h3 class="mb-4">Delete Game</h3>
+
+<div class="col-md-6">
+    <form asp-controller="Game" asp-action="ConfirmDelete" method="post">
+        <div class="form-group mt-2">
+            <label class="form-label">Title</label>
+            <input class="form-control" value="@Model.Title" disabled />
+        </div>
+        <div class="form-group mt-2">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" rows="4" disabled>@Model.Description</textarea>
+        </div>
+        <div class="form-group mt-2">
+            <label class="form-label">Genre</label>
+            <input class="form-control" value="@Model.Genre" disabled />
+        </div>
+        <div class="form-group mt-2">
+            <label class="form-label">Developer</label>
+            <input class="form-control" value="@Model.Developer" disabled />
+        </div>
+
+        <input type="hidden" asp-for="@Model.Id" value="@Model.Id" />
+
+        <div class="d-flex justify-content-end mt-3">
+            <button class="btn btn-danger" type="submit">Confirm</button>
+        </div>
+    </form>
+</div>

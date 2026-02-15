@@ -90,5 +90,78 @@ namespace GameTracker.Services
             _context.Developers.Add(developer);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<GameDetailsViewModel> GetGameDetailsByIdAsync(int id)
+        {
+            var game = await _context.Games
+                .Include(g => g.Genre)
+                .Include(g => g.Developer)
+                .FirstOrDefaultAsync(g => g.Id == id);
+
+            return new GameDetailsViewModel
+            {
+                Id = game.Id,
+                Title = game.Title,
+                Description = game.Description,
+                Genre = game.Genre.Name,
+                Developer = game.Developer.Name
+            };
+                
+        }
+
+        public async Task<GameEditViewModel> GetGameForEditByIdAsync(int id)
+        {
+            var game = await _context.Games
+               .Include(g => g.Genre)
+               .Include(g => g.Developer)
+               .FirstOrDefaultAsync(g => g.Id == id);
+
+            return new GameEditViewModel
+            {
+                Id = game.Id,
+                Title = game.Title,
+                ImageUrl = game.ImageUrl,
+                Description = game.Description,
+                GenreId = game.Genre.Id,
+                DeveloperId = game.Developer.Id
+            };
+        }
+
+        public async Task<GameDeleteViewModel> GetGameForDeletionByIdAsync(int id)
+        {
+            var game = await _context.Games
+              .Include(g => g.Genre)
+              .Include(g => g.Developer)
+              .FirstOrDefaultAsync(g => g.Id == id);
+
+            return new GameDeleteViewModel
+            {
+                Id = game.Id,
+                Title = game.Title,
+                Description = game.Description,
+                Genre = game.Genre.Name,
+                Developer = game.Developer.Name
+            };
+        }
+
+        public async Task EditGameAsync(GameEditViewModel model)
+        {
+            var game = await _context.Games.FirstOrDefaultAsync(g => g.Id == model.Id);
+            
+            game.Title = model.Title;
+            game.ImageUrl = model.ImageUrl;
+            game.Description = model.Description;
+            game.GenreId = model.GenreId;
+            game.DeveloperId = model.DeveloperId;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteGameAsync(int id)
+        {
+            var game = _context.Games.Find(id);
+            _context.Games.Remove(game);
+            _context.SaveChanges();
+        }
     }
 }

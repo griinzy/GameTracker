@@ -18,15 +18,19 @@
                 <th>Description</th>
                 <th>Genre</th>
                 <th>Developer</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach(var game in Model)
             {
-                <tr>
+                <tr class="align-middle">
                     <td class="p-1"><img src="@game.ImageUrl"/></td>
                     <td>@game.Title</td>
-                    <td>
+                    <td title="@game.Description">
                         @(
                             game.Description != null && game.Description.Length > 60
                             ? game.Description.Substring(0, 60) + "..."
@@ -35,6 +39,15 @@
                     </td>
                     <td>@game.Genre</td>
                     <td>@game.Developer</td>
+                    <td><a asp-controller="Game" asp-action="Details" asp-route-id="@game.Id" class="btn btn-link">Details</a></td>
+                    <td>
+                        <form asp-controller="Game" asp-action="Save" method="post">
+                            <input type="hidden" name="id" value="@game.Id" />
+                            <button type="submit" class="btn btn-link">Save</button>
+                        </form>
+                    </td>
+                    <td><a asp-controller="Game" asp-action="Edit" asp-route-id="@game.Id" class="btn btn-link">Edit</a></td>
+                    <td><a asp-controller="Game" asp-action="Delete" asp-route-id="@game.Id" class="btn btn-link">Delete</a></td>
                 </tr>
             }
         </tbody>

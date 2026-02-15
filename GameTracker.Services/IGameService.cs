@@ -15,7 +15,11 @@ namespace GameTracker.Services
         Task AddGameAsync(GameCreateViewModel model);
         Task AddGenreAsync(CreateGenreViewModel model);
         Task AddDeveloperAsync(CreateDeveloperViewModel model);
-
+        Task<GameDetailsViewModel> GetGameDetailsByIdAsync(int id);
+        Task<GameEditViewModel> GetGameForEditByIdAsync(int id);
+        Task<GameDeleteViewModel> GetGameForDeletionByIdAsync(int id);
+        Task EditGameAsync(GameEditViewModel model);
+        Task DeleteGameAsync(int id);
 
     }
 }
