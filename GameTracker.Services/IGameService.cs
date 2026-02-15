@@ -10,5 +10,12 @@ namespace GameTracker.Services
     public interface IGameService
     {
         Task<IEnumerable<GameIndexViewModel>> GetAllGamesAsync();
+        Task<IEnumerable<GenreViewModel>> GetGenresAsync();
+        Task<IEnumerable<DeveloperViewModel>> GetDevelopersAsync();
+        Task AddGameAsync(GameCreateViewModel model);
+        Task AddGenreAsync(CreateGenreViewModel model);
+        Task AddDeveloperAsync(CreateDeveloperViewModel model);
+
+
     }
 }

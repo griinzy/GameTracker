@@ -1,5 +1,37 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using GameTracker.ViewModels
+@model GameCreateViewModel
+
+<h3 class="mb-4">Add Game</h3>
+
+<div class="col-md-6">
+    <form asp-controller="Game" asp-action="Create" method="post">
+        <div class="form-group mt-2">
+            <label asp-for="@Model.Title" class="form-label"></label>
+            <input asp-for="@Model.Title" class="form-control"/>
+        </div>
+        <div class="form-group mt-2">
+            <label asp-for="@Model.ImageUrl" class="form-label"></label>
+            <input asp-for="@Model.ImageUrl" class="form-control" />
+        </div>
+        <div class="form-group mt-2">
+            <label asp-for="@Model.Description" class="form-label"></label>
+            <textarea asp-for="@Model.Description" class="form-control" rows="4"></textarea>
+        </div>
+        <div class="form-group mt-2">
+            <label asp-for="@Model.GenreId" class="form-label">Genre</label>
+            <select asp-for="@Model.GenreId" class="form-control" asp-items="ViewBag.Genres">
+                <option value="" disabled selected>Genres</option>
+            </select>
+        </div>
+        <div class="form-group mt-2">
+            <label asp-for="@Model.DeveloperId" class="form-label">Developer</label>
+            <select asp-for="@Model.DeveloperId" class="form-control" asp-items="ViewBag.Developers">
+                <option value="" disabled selected>Developers</option>
+            </select>
+        </div>
+
+        <div class="d-flex justify-content-end mt-3">
+            <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+    </form>
+</div>

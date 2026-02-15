@@ -1,0 +1,42 @@
+﻿@using GameTracker.ViewModels
+@model IEnumerable<GameIndexViewModel>
+@{
+}
+
+<div class="d-flex justify-content-end gap-2">
+    <a class="btn btn-primary" asp-controller="Game" asp-action="Create">Add Game</a>
+    <a class="btn btn-outline-primary" asp-controller="Game" asp-action="CreateGenre">Add Genre</a>
+    <a class="btn btn-outline-primary" asp-controller="Game" asp-action="CreateDeveloper">Add Developer</a>
+</div>
+<hr />
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Genre</th>
+                <th>Developer</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var game in Model)
+            {
+                <tr>
+                    <td class="p-1"><img src="@game.ImageUrl"/></td>
+                    <td>@game.Title</td>
+                    <td>
+                        @(
+                            game.Description != null && game.Description.Length > 60
+                            ? game.Description.Substring(0, 60) + "..."
+                            : game.Description
+                            )
+                    </td>
+                    <td>@game.Genre</td>
+                    <td>@game.Developer</td>
+                </tr>
+            }
+        </tbody>
+</table>
+</div>

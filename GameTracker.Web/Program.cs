@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using GameTracker.Data;
+using GameTracker.Services;
 
 namespace GameTracker.Web;
 
@@ -22,11 +23,14 @@ public class Program
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
-                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
             }
 
         )
             .AddEntityFrameworkStores<ApplicationDbContext>();
+
+        builder.Services.AddScoped<IGameService, GameService>();
+
         builder.Services.AddControllersWithViews();
 
         var app = builder.Build();
