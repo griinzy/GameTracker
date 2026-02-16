@@ -35,15 +35,9 @@
             @foreach(var game in Model)
             {
                 <tr class="align-middle">
-                    <td class="p-1"><img src="@game.ImageUrl"/></td>
+                    <td class="p-1"><img src="@game.ImageUrl" style="max-height: 50px"/></td>
                     <td>@game.Title</td>
-                    <td title="@game.Description">
-                        @(
-                                game.Description != null && game.Description.Length > 60
-                                ? game.Description.Substring(0, 60) + "..."
-                                : game.Description
-                                )
-                    </td>
+                    <td title="@game.Description" class="description">@game.Description</td>
                     <td>@game.Genre</td>
                     <td>@game.Developer</td>
                     <td><a asp-controller="Game" asp-action="Details" asp-route-id="@game.Id" class="btn btn-link">Details</a></td>

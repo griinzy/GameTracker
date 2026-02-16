@@ -20,3 +20,10 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.description {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
