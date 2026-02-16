@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GameTracker.Common\GameTracker.Common.csproj" />
+    <ProjectReference Include="..\GameTracker.Data.Models\GameTracker.Data.Models.csproj" />
   </ItemGroup>
 
 </Project>

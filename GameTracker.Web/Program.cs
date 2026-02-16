@@ -29,7 +29,7 @@ public class Program
         )
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
-        builder.Services.AddScoped<IGameService, GameService>();
+        builder.Services.AddScoped<GameService>();
 
         builder.Services.AddControllersWithViews();
 

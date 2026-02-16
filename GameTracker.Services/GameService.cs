@@ -2,10 +2,11 @@
 using GameTracker.Data.Models;
 using GameTracker.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace GameTracker.Services
 {
-    public class GameService : IGameService
+    public class GameService
     {
         private readonly ApplicationDbContext _context;
 
@@ -163,5 +164,38 @@ namespace GameTracker.Services
             _context.Games.Remove(game);
             _context.SaveChanges();
         }
+
+        public async Task SaveGameAsync(int id, string userId)
+        {
+            var userGame = new UserGame
+            {
+                UserId = userId,
+                GameId = id,
+                Status = GameStatus.Playing,
+                Rating = 0
+            };
+
+            await _context.UserGames.AddAsync(userGame);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<GameSaveViewModel>> GetSavedGamesAsync(string userId)
+        {
+            var games = await _context.UserGames
+                .Where(g => g.UserId == userId)
+                .Include(g => g.Game)
+                .Select(g => new GameSaveViewModel
+                {
+                    Id = g.Game.Id,
+                    Title = g.Game.Title,
+                    Status = g.Status,
+                    Rating = g.Rating,
+                    AddedOn = g.AddedOn
+                })
+                .ToListAsync();
+
+            return games;
+        }
+
     }
 }

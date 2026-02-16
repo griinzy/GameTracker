@@ -1,0 +1,30 @@
+﻿@using GameTracker.ViewModels
+@model IEnumerable<GameSaveViewModel>
+@{
+}
+
+<hr />
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Rating</th>
+                <th>Added On</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in Model)
+            {
+                <tr>
+                    <td>@game.Title</td>
+                    <td>@game.Status</td>
+                    <td>@game.Rating</td>
+                    <td>@game.AddedOn</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

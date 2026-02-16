@@ -9,9 +9,9 @@ namespace GameTracker.Web.Controllers
 {
     public class GameController : BaseController
     {
-        private readonly IGameService _gameService;
+        private readonly GameService _gameService;
 
-        public GameController(IGameService gameService)
+        public GameController(GameService gameService)
         {
             _gameService = gameService;
         }
@@ -154,6 +154,23 @@ namespace GameTracker.Web.Controllers
         {
             await _gameService.DeleteGameAsync(id);
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Save(int id)
+        {
+            string? userId = GetUserId();
+
+            await _gameService.SaveGameAsync(id, userId);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SavedGames()
+        {
+            string? userId = GetUserId();
+            var games = await _gameService.GetSavedGamesAsync(userId);
+            return View(games);
         }
     }
 }
