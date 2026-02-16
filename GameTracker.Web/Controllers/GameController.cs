@@ -23,6 +23,7 @@ namespace GameTracker.Web.Controllers
             return View(games);
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -31,6 +32,7 @@ namespace GameTracker.Web.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(GameCreateViewModel model)
         {
@@ -48,12 +50,14 @@ namespace GameTracker.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> CreateGenre()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateGenre(CreateGenreViewModel model)
         {
@@ -71,12 +75,14 @@ namespace GameTracker.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> CreateDeveloper()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateDeveloper(CreateDeveloperViewModel model)
         {
@@ -106,6 +112,7 @@ namespace GameTracker.Web.Controllers
             return View(game);
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -119,6 +126,7 @@ namespace GameTracker.Web.Controllers
             return View(game);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Edit(GameEditViewModel model)
         {
@@ -130,6 +138,7 @@ namespace GameTracker.Web.Controllers
             return RedirectToAction("Details", new { id = model.Id });
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -141,6 +150,7 @@ namespace GameTracker.Web.Controllers
             return View(game);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
@@ -148,6 +158,7 @@ namespace GameTracker.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Save(int id)
         {
@@ -155,6 +166,7 @@ namespace GameTracker.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> SavedGames()
         {
@@ -162,6 +174,7 @@ namespace GameTracker.Web.Controllers
             return View(games);
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> EditSavedGame(int id)
         {
@@ -169,6 +182,7 @@ namespace GameTracker.Web.Controllers
             return View(savedGame);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> EditSavedGame(GameSaveViewModel model)
         {
@@ -180,6 +194,7 @@ namespace GameTracker.Web.Controllers
             return RedirectToAction("SavedGames");
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> DeleteSavedGame(int id)
         {
@@ -191,6 +206,7 @@ namespace GameTracker.Web.Controllers
             return View(savedGame);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> ConfirmDeleteSavedGame(int id)
         {
