@@ -1,6 +1,7 @@
 ﻿@using GameTracker.ViewModels
 @model IEnumerable<GameIndexViewModel>
 @{
+    ViewData["Title"] = "Games";
 }
 
 @if (User.Identity.IsAuthenticated)
@@ -24,9 +25,9 @@
                 <th></th>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
                 }
             </tr>
         </thead>

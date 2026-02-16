@@ -40,12 +40,6 @@ namespace GameTracker.Web.Controllers
             {
                 return View();
             }
-
-            if (string.IsNullOrEmpty(GetUserId()))
-            {
-                //return RedirectToAction("Login", "Account");
-            }
-
             await _gameService.AddGameAsync(model);
             return RedirectToAction("Index");
         }
@@ -66,11 +60,6 @@ namespace GameTracker.Web.Controllers
                 return View();
             }
 
-            if (string.IsNullOrEmpty(GetUserId()))
-            {
-                //return RedirectToAction("Login", "Account");
-            }
-
             await _gameService.AddGenreAsync(model);
             return RedirectToAction("Index");
         }
@@ -89,11 +78,6 @@ namespace GameTracker.Web.Controllers
             if (!ModelState.IsValid)
             {
                 return View();
-            }
-
-            if (string.IsNullOrEmpty(GetUserId()))
-            {
-                //return RedirectToAction("Login", "Account");
             }
 
             await _gameService.AddDeveloperAsync(model);
