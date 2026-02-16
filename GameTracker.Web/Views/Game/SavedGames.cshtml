@@ -3,7 +3,6 @@
 @{
 }
 
-<hr />
 <div>
     <table class="table">
         <thead>
@@ -12,6 +11,7 @@
                 <th>Status</th>
                 <th>Rating</th>
                 <th>Added On</th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -23,6 +23,8 @@
                     <td>@game.Status</td>
                     <td>@game.Rating</td>
                     <td>@game.AddedOn</td>
+                    <td><a asp-controller="Game" asp-action="EditSavedGame" asp-route-id="@game.Id">Edit</a></td>
+                    <td><a asp-controller="Game" asp-action="DeleteSavedGame" asp-route-id="@game.Id">Remove</a></td>
                 </tr>
             }
         </tbody>

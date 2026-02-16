@@ -167,26 +167,31 @@ namespace GameTracker.Services
 
         public async Task SaveGameAsync(int id, string userId)
         {
-            var userGame = new UserGame
-            {
-                UserId = userId,
-                GameId = id,
-                Status = GameStatus.Playing,
-                Rating = 0
-            };
+            var saveExists = await _context.UserGames
+                .AnyAsync(g => g.GameId == id && g.User.Id == userId);
 
-            await _context.UserGames.AddAsync(userGame);
-            await _context.SaveChangesAsync();
+            if (!saveExists)
+            {
+                var userGame = new UserGame
+                {
+                    UserId = userId,
+                    GameId = id,
+                    Status = GameStatus.Playing,
+                    Rating = 0
+                };
+
+                await _context.UserGames.AddAsync(userGame);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<IEnumerable<GameSaveViewModel>> GetSavedGamesAsync(string userId)
         {
             var games = await _context.UserGames
                 .Where(g => g.UserId == userId)
-                .Include(g => g.Game)
                 .Select(g => new GameSaveViewModel
                 {
-                    Id = g.Game.Id,
+                    Id = g.Id,
                     Title = g.Game.Title,
                     Status = g.Status,
                     Rating = g.Rating,
@@ -197,5 +202,38 @@ namespace GameTracker.Services
             return games;
         }
 
+        public async Task<GameSaveViewModel> GetSavedGameByIdAsync(int id, string userId)
+        {
+            var savedGame = await _context.UserGames
+                .Where(g => g.Id == id && g.UserId == userId)
+                .Select(g => new GameSaveViewModel
+                {
+                    Id = g.Id,
+                    Title = g.Game.Title,
+                    Status = g.Status,
+                    Rating = g.Rating,
+                    AddedOn = g.AddedOn
+                })
+                .FirstOrDefaultAsync();
+            return savedGame;
+        }
+
+        public async Task EditSavedGameAsync(GameSaveViewModel model)
+        {
+            var savedGame = await _context.UserGames
+                .FirstOrDefaultAsync(g => g.Id == model.Id);
+
+            savedGame.Status = model.Status;
+            savedGame.Rating = model.Rating;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteSavedGame(int id)
+        {
+            var savedGame = _context.UserGames.Find(id);
+            _context.UserGames.Remove(savedGame);
+            _context.SaveChanges();
+        }
     }
 }

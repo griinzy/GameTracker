@@ -1,0 +1,26 @@
+﻿@using GameTracker.ViewModels
+@using GameTracker.Data.Models;
+@model GameSaveViewModel
+@{
+}
+
+<h3 class="mb-4">Remove Saved Game</h3>
+
+<div class="col-md-6">
+    <form asp-controller="Game" asp-action="ConfirmDeleteSavedGame" method="post">
+        <input hidden asp-for="@Model.Id" value="@Model.Id" />
+        <h4>@Model.Title</h4>
+        <div class="form-group mt-2">
+            <label class="form-label">Status</label>
+            <input class="form-control" value="@Model.Status" disabled/>
+        </div>
+        <div class="form-group mt-2">
+            <label class="form-label">Rating</label>
+            <input class="form-control" value="@Model.Rating" disabled/>
+        </div>
+
+        <div class="d-flex justify-content-end mt-3">
+            <button class="btn btn-primary" type="submit">Confirm</button>
+        </div>
+    </form>
+</div>

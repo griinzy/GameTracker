@@ -39,9 +39,7 @@ namespace GameTracker.Web.Controllers
                 return View();
             }
 
-            string? userId = GetUserId();
-
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrEmpty(GetUserId()))
             {
                 //return RedirectToAction("Login", "Account");
             }
@@ -64,9 +62,7 @@ namespace GameTracker.Web.Controllers
                 return View();
             }
 
-            string? userId = GetUserId();
-
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrEmpty(GetUserId()))
             {
                 //return RedirectToAction("Login", "Account");
             }
@@ -89,9 +85,7 @@ namespace GameTracker.Web.Controllers
                 return View();
             }
 
-            string? userId = GetUserId();
-
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrEmpty(GetUserId()))
             {
                 //return RedirectToAction("Login", "Account");
             }
@@ -144,8 +138,6 @@ namespace GameTracker.Web.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ViewBag.Genres = new SelectList(await _gameService.GetGenresAsync(), "Id", "Name");
-            ViewBag.Developers = new SelectList(await _gameService.GetDevelopersAsync(), "Id", "Name");
             return View(game);
         }
 
@@ -159,18 +151,51 @@ namespace GameTracker.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Save(int id)
         {
-            string? userId = GetUserId();
-
-            await _gameService.SaveGameAsync(id, userId);
+            await _gameService.SaveGameAsync(id, GetUserId());
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public async Task<IActionResult> SavedGames()
         {
-            string? userId = GetUserId();
-            var games = await _gameService.GetSavedGamesAsync(userId);
+            var games = await _gameService.GetSavedGamesAsync(GetUserId());
             return View(games);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditSavedGame(int id)
+        {
+            var savedGame = await _gameService.GetSavedGameByIdAsync(id, GetUserId());
+            return View(savedGame);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditSavedGame(GameSaveViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            await _gameService.EditSavedGameAsync(model);
+            return RedirectToAction("SavedGames");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteSavedGame(int id)
+        {
+            var savedGame = await _gameService.GetSavedGameByIdAsync(id, GetUserId());
+            if (savedGame == null)
+            {
+                return RedirectToAction("SavedGames");
+            }
+            return View(savedGame);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmDeleteSavedGame(int id)
+        {
+            await _gameService.DeleteSavedGame(id);
+            return RedirectToAction("SavedGames");
         }
     }
 }
