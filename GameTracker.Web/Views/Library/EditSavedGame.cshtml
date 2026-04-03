@@ -8,7 +8,7 @@
 <h3 class="mb-4">Edit Save</h3>
 
 <div class="col-md-6">
-    <form asp-controller="Game" asp-action="EditSavedGame" method="post">
+    <form asp-controller="Library" asp-action="EditSavedGame" method="post">
         <input hidden asp-for="@Model.Id" value="@Model.Id" />
         <input hidden asp-for="@Model.Title" value="@Model.Title"/>
         <h4>@Model.Title</h4>

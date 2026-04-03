@@ -8,7 +8,7 @@
 <h3 class="mb-4">Remove Saved Game</h3>
 
 <div class="col-md-6">
-    <form asp-controller="Game" asp-action="ConfirmDeleteSavedGame" method="post">
+    <form asp-controller="Library" asp-action="ConfirmDeleteSavedGame" method="post">
         <input hidden asp-for="@Model.Id" value="@Model.Id" />
         <h4>@Model.Title</h4>
         <div class="form-group mt-2">

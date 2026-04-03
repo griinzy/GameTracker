@@ -24,8 +24,8 @@
                     <td>@game.Status</td>
                     <td>@game.Rating</td>
                     <td>@game.AddedOn</td>
-                    <td><a asp-controller="Game" asp-action="EditSavedGame" asp-route-id="@game.Id">Edit</a></td>
-                    <td><a asp-controller="Game" asp-action="DeleteSavedGame" asp-route-id="@game.Id">Remove</a></td>
+                    <td><a asp-controller="Library" asp-action="EditSavedGame" asp-route-id="@game.Id">Edit</a></td>
+                    <td><a asp-controller="Library" asp-action="DeleteSavedGame" asp-route-id="@game.Id">Remove</a></td>
                 </tr>
             }
         </tbody>
