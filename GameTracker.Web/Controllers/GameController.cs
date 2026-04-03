@@ -44,46 +44,6 @@ namespace GameTracker.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize]
-        [HttpGet]
-        public async Task<IActionResult> CreateGenre()
-        {
-            return View();
-        }
-
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> CreateGenre(CreateGenreViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-
-            await _gameService.AddGenreAsync(model);
-            return RedirectToAction("Index");
-        }
-
-        [Authorize]
-        [HttpGet]
-        public async Task<IActionResult> CreateDeveloper()
-        {
-            return View();
-        }
-
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> CreateDeveloper(CreateDeveloperViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-
-            await _gameService.AddDeveloperAsync(model);
-            return RedirectToAction("Index");
-        }
-
         [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
