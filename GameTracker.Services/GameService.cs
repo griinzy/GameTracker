@@ -33,6 +33,37 @@ namespace GameTracker.Services
                 .ToListAsync();
         }
 
+        public async Task<PaginatedGamesViewModel> GetAllGamesPaginatedAsync(int page = 1, int pageSize = 10)
+        {
+            var query = _context.Games
+                .Include(g => g.Genre)
+                .Include(g => g.Developer)
+                .AsQueryable();
+
+            var totalGames = await query.CountAsync();
+
+            var games = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(g => new GameIndexViewModel
+                {
+                    Id = g.Id,
+                    Title = g.Title,
+                    ImageUrl = g.ImageUrl,
+                    Description = g.Description,
+                    Genre = g.Genre.Name,
+                    Developer = g.Developer.Name
+                })
+                .ToListAsync();
+
+            return new PaginatedGamesViewModel
+            {
+                Games = games,
+                CurrentPage = page,
+                TotalPages = (int)Math.Ceiling(totalGames / (double)pageSize)
+            };
+        }
+
         public async Task<IEnumerable<GenreViewModel>> GetGenresAsync()
         {
             return await _context.Genres
