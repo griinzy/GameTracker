@@ -6,12 +6,15 @@
 
 @if (User.Identity.IsAuthenticated)
 {   
-<div class="d-flex justify-content-end gap-2">
-    <a class="btn btn-primary" asp-controller="Game" asp-action="Create">Add Game</a>
-    <a class="btn btn-outline-primary" asp-controller="Admin" asp-action="CreateGenre">Add Genre</a>
-    <a class="btn btn-outline-primary" asp-controller="Admin" asp-action="CreateDeveloper">Add Developer</a>
-</div>
-<hr />
+    <div class="d-flex justify-content-end gap-2">
+        <a class="btn btn-primary" asp-controller="Game" asp-action="Create">Add Game</a>
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="btn btn-outline-primary" asp-controller="Admin" asp-action="CreateGenre">Add Genre</a>
+            <a class="btn btn-outline-primary" asp-controller="Admin" asp-action="CreateDeveloper">Add Developer</a>
+        }
+    </div>
+    <hr />
 }
 <div>
     <table class="table">
@@ -25,9 +28,9 @@
                 <th></th>
                 @if (User.Identity.IsAuthenticated)
                 {
-                <th></th>
-                <th></th>
-                <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                 }
             </tr>
         </thead>
@@ -43,14 +46,17 @@
                     <td><a asp-controller="Game" asp-action="Details" asp-route-id="@game.Id" class="btn btn-link">Details</a></td>
                     @if (User.Identity.IsAuthenticated)
                     {   
-                    <td>
-                        <form asp-controller="Library" asp-action="Save" method="post">
-                            <input type="hidden" name="id" value="@game.Id" />
-                            <button type="submit" class="btn btn-link">Save</button>
-                        </form>
-                    </td>
-                    <td><a asp-controller="Game" asp-action="Edit" asp-route-id="@game.Id" class="btn btn-link">Edit</a></td>
-                    <td><a asp-controller="Game" asp-action="Delete" asp-route-id="@game.Id" class="btn btn-link">Delete</a></td>
+                        <td>
+                            <form asp-controller="Library" asp-action="Save" method="post">
+                                <input type="hidden" name="id" value="@game.Id" />
+                                <button type="submit" class="btn btn-link">Save</button>
+                            </form>
+                        </td>
+                        @if(User.IsInRole("Admin"))
+                        {
+                            <td><a asp-controller="Admin" asp-action="Edit" asp-route-id="@game.Id" class="btn btn-link">Edit</a></td>
+                            <td><a asp-controller="Admin" asp-action="Delete" asp-route-id="@game.Id" class="btn btn-link">Delete</a></td>
+                        }
                     }
                 </tr>
             }
