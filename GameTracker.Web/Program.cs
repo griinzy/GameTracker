@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using GameTracker.Data;
 using GameTracker.Services;
-using System.Threading.Tasks;
 
 namespace GameTracker.Web;
 
@@ -41,12 +40,25 @@ public class Program
         {
             var services = scope.ServiceProvider;
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-            string roleName = "Admin";
+            string adminRole = "Admin";
 
-            if (!await roleManager.RoleExistsAsync(roleName))
+            if (!await roleManager.RoleExistsAsync(adminRole))
             {
-                await roleManager.CreateAsync(new IdentityRole(roleName));
+                await roleManager.CreateAsync(new IdentityRole(adminRole));
             }
+
+            var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+
+            string adminEmail = "admin@mail.com";
+
+            var adminUser = new IdentityUser
+            {
+                UserName = adminEmail,
+                Email = adminEmail,
+                EmailConfirmed = true
+            };
+            await userManager.CreateAsync(adminUser, "admin123");
+            await userManager.AddToRoleAsync(adminUser, adminRole);
         }
 
         // Configure the HTTP request pipeline.
