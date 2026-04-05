@@ -17,9 +17,9 @@ namespace GameTracker.Web.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Index(int page = 1, string? sortBy = null)
+        public async Task<IActionResult> Index(int page = 1, string? sortBy = null, string? searchTitle = null)
         {
-            var model = await _gameService.GetAllGamesPaginatedAsync(page, 10, sortBy);
+            var model = await _gameService.GetAllGamesPaginatedAsync(page, 10, sortBy, searchTitle);
             return View(model);
         }
 

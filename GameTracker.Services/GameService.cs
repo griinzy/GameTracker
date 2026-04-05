@@ -33,12 +33,17 @@ namespace GameTracker.Services
                 .ToListAsync();
         }
 
-        public async Task<PaginatedGamesViewModel> GetAllGamesPaginatedAsync(int page = 1, int pageSize = 10, string? sortBy = null)
+        public async Task<PaginatedGamesViewModel> GetAllGamesPaginatedAsync(int page = 1, int pageSize = 10, string? sortBy = null, string? searchTitle = null)
         {
             var query = _context.Games
                 .Include(g => g.Genre)
                 .Include(g => g.Developer)
                 .AsQueryable();
+
+            if(!string.IsNullOrWhiteSpace(searchTitle))
+            {
+                query = query.Where(g => g.Title.Contains(searchTitle));
+            }
 
             switch(sortBy)
             {
@@ -77,7 +82,8 @@ namespace GameTracker.Services
                 Games = games,
                 CurrentPage = page,
                 TotalPages = (int)Math.Ceiling(totalGames / (double)pageSize),
-                SortBy = sortBy
+                SortBy = sortBy,
+                SearchTitle = searchTitle
             };
         }
 

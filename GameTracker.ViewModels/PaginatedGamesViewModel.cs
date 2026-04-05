@@ -12,5 +12,6 @@ namespace GameTracker.ViewModels
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
         public string? SortBy { get; set; }
+        public string? SearchTitle { get; set; }
     }
 }
