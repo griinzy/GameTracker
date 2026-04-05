@@ -33,12 +33,28 @@ namespace GameTracker.Services
                 .ToListAsync();
         }
 
-        public async Task<PaginatedGamesViewModel> GetAllGamesPaginatedAsync(int page = 1, int pageSize = 10)
+        public async Task<PaginatedGamesViewModel> GetAllGamesPaginatedAsync(int page = 1, int pageSize = 10, string? sortBy = null)
         {
             var query = _context.Games
                 .Include(g => g.Genre)
                 .Include(g => g.Developer)
                 .AsQueryable();
+
+            switch(sortBy)
+            {
+                case "title":
+                    query = query.OrderBy(g => g.Title);
+                    break;
+                case "genre":
+                    query = query.OrderBy(g => g.Genre.Name);
+                    break;
+                case "developer":
+                    query = query.OrderBy(g => g.Developer.Name);
+                    break;
+                default:
+                    query = query.OrderBy(g => g.Title);
+                    break;
+            }
 
             var totalGames = await query.CountAsync();
 
