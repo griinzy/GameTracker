@@ -76,7 +76,8 @@ namespace GameTracker.Services
             {
                 Games = games,
                 CurrentPage = page,
-                TotalPages = (int)Math.Ceiling(totalGames / (double)pageSize)
+                TotalPages = (int)Math.Ceiling(totalGames / (double)pageSize),
+                SortBy = sortBy
             };
         }
 
