@@ -54,14 +54,17 @@ public class Program
 
             string adminEmail = "admin@mail.com";
 
-            var adminUser = new IdentityUser
+            if (await userManager.FindByEmailAsync(adminEmail) == null)
             {
-                UserName = adminEmail,
-                Email = adminEmail,
-                EmailConfirmed = true
-            };
-            await userManager.CreateAsync(adminUser, "admin123");
-            await userManager.AddToRoleAsync(adminUser, "Admin");
+                var adminUser = new IdentityUser
+                {
+                    UserName = adminEmail,
+                    Email = adminEmail,
+                    EmailConfirmed = true
+                };
+                await userManager.CreateAsync(adminUser, "admin123");
+                await userManager.AddToRoleAsync(adminUser, "Admin");
+            }
         }
 
         // Configure the HTTP request pipeline.
