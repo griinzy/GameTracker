@@ -100,11 +100,15 @@
             asp-route-page="@(Model.CurrentPage - 1)"
             asp-route-sortBy="@Model.SortBy"
             asp-route-searchTitle="@Model.SearchTitle"
+            asp-route-genreId="@Model.GenreId"
+            asp-route-developerId="@Model.DeveloperId"
             class="btn btn-outline-secondary @(Model.CurrentPage <= 1 ? "disabled" : "")">Previous</a>
         <a asp-action="Index"
             asp-route-page="@(Model.CurrentPage + 1)"
             asp-route-sortBy="@Model.SortBy"
             asp-route-searchTitle="@Model.SearchTitle"
+            asp-route-genreId="@Model.GenreId"
+            asp-route-developerId="@Model.DeveloperId"
             class="btn btn-outline-secondary @(Model.CurrentPage >= Model.TotalPages ? "disabled" : "")">Next</a>
     </div>
 </div>
