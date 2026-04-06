@@ -40,11 +40,14 @@ public class Program
         {
             var services = scope.ServiceProvider;
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-            string adminRole = "Admin";
+            string[] roles = { "Admin", "User" };
 
-            if (!await roleManager.RoleExistsAsync(adminRole))
+            foreach(string role in roles)
             {
-                await roleManager.CreateAsync(new IdentityRole(adminRole));
+                if (!await roleManager.RoleExistsAsync(role))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(role));
+                }
             }
 
             var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
@@ -58,7 +61,7 @@ public class Program
                 EmailConfirmed = true
             };
             await userManager.CreateAsync(adminUser, "admin123");
-            await userManager.AddToRoleAsync(adminUser, adminRole);
+            await userManager.AddToRoleAsync(adminUser, "Admin");
         }
 
         // Configure the HTTP request pipeline.
