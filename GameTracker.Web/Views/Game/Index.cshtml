@@ -17,7 +17,7 @@
     <hr />
 }
 
-<form asp-action="Index" method="get" class="row">
+<form asp-action="Index" method="get" class="row g-2">
     <div class="col-md-4">
         <input type="text" name="searchTitle" value="@Model.SearchTitle" placeholder="Search" class="form-control"/>
     </div>
@@ -27,6 +27,24 @@
             <option value="title" selected="@(Model.SortBy == "title")">Title</option>
             <option value="genre" selected="@(Model.SortBy == "genre")">Genre</option>
             <option value="developer" selected="@(Model.SortBy == "developer")">Developer</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select class="form-select" name="genreId" onchange="this.form.submit()">
+            <option value="">All Genres</option>
+            @foreach(var genre in Model.Genres)
+            {
+                <option value="@genre.Id" selected="@(Model.GenreId == genre.Id)">@genre.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select class="form-select" name="developerId" onchange="this.form.submit()">
+            <option value="">All Developers</option>
+            @foreach (var developer in Model.Developers)
+            {
+                <option value="@developer.Id" selected="@(Model.DeveloperId == developer.Id)">@developer.Name</option>
+            }
         </select>
     </div>
 </form>
