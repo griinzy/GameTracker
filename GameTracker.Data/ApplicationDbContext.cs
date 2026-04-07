@@ -49,7 +49,7 @@ public class ApplicationDbContext : IdentityDbContext
             new Game
             {
                 Id = 2,
-                Title = "Resident Evil 4 Remake",
+                Title = "Resident Evil 4",
                 ImageUrl = "https://cdn2.steamgriddb.com/icon/288277613d0286fded7bc1d0bcfaa2dc/32/256x256.png",
                 Description = "Leon Kennedy returns in this modernized remake, fighting through a rural European village overrun by a mysterious cult, combining intense combat with horror and puzzle-solving.",
                 GenreId = 2,
@@ -81,6 +81,60 @@ public class ApplicationDbContext : IdentityDbContext
                 Description = "The successor to Counter‑Strike: Global Offensive, CS2 offers refined tactical gameplay, upgraded visuals, and competitive team‑based shooting focused on precision and strategy.",
                 GenreId = 5,
                 DeveloperId = 5
+            },
+            new Game
+            {
+                Id = 6,
+                Title = "Grand Theft Auto V",
+                ImageUrl = "https://cdn.steamstatic.com/steamcommunity/public/images/apps/271590/06b52e09e284542dd99eea45f9f85f68440dbcaf.ico",
+                Description = "When a young street hustler, a retired bank robber, and a terrifying psychopath find themselves entangled with some of the most frightening and deranged elements of the criminal underworld, the U.S. government, and the entertainment industry, they must pull off a series of dangerous heists to survive in a ruthless city in which they can trust nobody — least of all each other.",
+                GenreId = 4,
+                DeveloperId = 4
+            },
+            new Game
+            {
+                Id = 7,
+                Title = "Resident Evil 2",
+                ImageUrl = "https://cdn.steamstatic.com/steamcommunity/public/images/apps/883710/944337601cbaf7e04fb397170ec25124f5b34822.ico",
+                Description = "A deadly virus engulfs the residents of Raccoon City in September of 1998, plunging the city into chaos as flesh eating zombies roam the streets for survivors. An unparalleled adrenaline rush, gripping storyline, and unimaginable horrors await you. ",
+                GenreId = 2,
+                DeveloperId = 2
+            },
+            new Game
+            {
+                Id = 8,
+                Title = "Resident Evil 3",
+                ImageUrl = "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/952060/916c824e7c5becfb7d5e411ce751146cef78b3b4.ico",
+                Description = "Jill Valentine is one of the last remaining people in Raccoon City to witness the atrocities Umbrella performed. To stop her, Umbrella unleashes their ultimate secret weapon: Nemesis!",
+                GenreId = 2,
+                DeveloperId = 2
+            },
+            new Game
+            {
+                Id = 9,
+                Title = "Half-Life 2",
+                ImageUrl = "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/220/85c721efacb1b0903fa11e993291c33da8f643d1.ico",
+                Description = "Reawakened from stasis in the occupied metropolis of City 17, Gordon Freeman is joined by Alyx Vance as he leads a desperate human resistance. Experience the landmark first-person shooter packed with immersive world-building, boundary-pushing physics, and exhilarating combat.",
+                GenreId = 5,
+                DeveloperId = 5
+            },
+            new Game
+            {
+                Id = 10,
+                Title = "Dark Souls 1",
+                ImageUrl = "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/570940/b3c6922185ecc5b42e188e0c5cdcdea11d419539.ico",
+                Description = "Then, there was fire. Re-experience the critically acclaimed, genre-defining game that started it all.",
+                GenreId = 1,
+                DeveloperId = 1
+            },
+            new Game
+            {
+                Id = 11,
+                Title = "Dark Souls 3",
+                ImageUrl = "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/374320/e9bb44e88f49a1491db1664ec765e90e7debc3ea.ico",
+                Description = "Dark Souls continues to push the boundaries with the latest, ambitious chapter in the critically-acclaimed and genre-defining series. Prepare yourself and Embrace The Darkness! ",
+                GenreId = 1,
+                DeveloperId = 1
             }
         );
     }
