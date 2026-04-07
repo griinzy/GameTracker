@@ -50,7 +50,7 @@ namespace GameTracker.Web.Controllers
             var game = await _gameService.GetGameDetailsByIdAsync(id);
             if(game == null)
             {
-                return RedirectToAction("Index");
+                return NotFound();
             }
 
             return View(game);

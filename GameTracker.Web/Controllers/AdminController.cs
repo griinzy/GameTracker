@@ -23,7 +23,7 @@ namespace GameTracker.Web.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> CreateGenre()
+        public IActionResult CreateGenre()
         {
             return View();
         }
@@ -34,7 +34,7 @@ namespace GameTracker.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(model);
             }
 
             await _gameService.AddGenreAsync(model);
@@ -43,7 +43,7 @@ namespace GameTracker.Web.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> CreateDeveloper()
+        public IActionResult CreateDeveloper()
         {
             return View();
         }
@@ -54,7 +54,7 @@ namespace GameTracker.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(model);
             }
 
             await _gameService.AddDeveloperAsync(model);
@@ -68,7 +68,7 @@ namespace GameTracker.Web.Controllers
             var game = await _gameService.GetGameForEditByIdAsync(id);
             if (game == null)
             {
-                return RedirectToAction("Index");
+                return NotFound();
             }
             ViewBag.Genres = new SelectList(await _gameService.GetGenresAsync(), "Id", "Name");
             ViewBag.Developers = new SelectList(await _gameService.GetDevelopersAsync(), "Id", "Name");
@@ -81,10 +81,10 @@ namespace GameTracker.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(model);
             }
             await _gameService.EditGameAsync(model);
-            return RedirectToAction("Details", new { id = model.Id });
+            return RedirectToAction("Details", "Game", new { id = model.Id });
         }
 
         [Authorize]
@@ -94,7 +94,7 @@ namespace GameTracker.Web.Controllers
             var game = await _gameService.GetGameForDeletionByIdAsync(id);
             if (game == null)
             {
-                return RedirectToAction("Index");
+                return NotFound();
             }
             return View(game);
         }

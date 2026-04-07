@@ -58,7 +58,7 @@ namespace GameTracker.Web.Controllers
             var savedGame = await _gameService.GetSavedGameByIdAsync(id, GetUserId());
             if (savedGame == null)
             {
-                return RedirectToAction("Index");
+                return NotFound();
             }
             return View(savedGame);
         }
