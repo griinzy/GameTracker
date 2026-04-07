@@ -9,9 +9,9 @@ namespace GameTracker.Web.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : BaseController
     {
-        private readonly GameService _gameService;
+        private readonly IGameService _gameService;
 
-        public AdminController(GameService gameService)
+        public AdminController(IGameService gameService)
         {
             _gameService = gameService;
         }
@@ -38,7 +38,7 @@ namespace GameTracker.Web.Controllers
             }
 
             await _gameService.AddGenreAsync(model);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Game");
         }
 
         [Authorize]
@@ -58,7 +58,7 @@ namespace GameTracker.Web.Controllers
             }
 
             await _gameService.AddDeveloperAsync(model);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Game");
         }
 
         [Authorize]
@@ -104,7 +104,7 @@ namespace GameTracker.Web.Controllers
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             await _gameService.DeleteGameAsync(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Game");
         }
     }
 }

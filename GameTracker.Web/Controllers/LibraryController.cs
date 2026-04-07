@@ -7,13 +7,12 @@ namespace GameTracker.Web.Controllers
 {
     public class LibraryController : BaseController
     {
-        private readonly GameService _gameService;
+        private readonly IGameService _gameService;
 
-        public LibraryController(GameService gameService)
+        public LibraryController(IGameService gameService)
         {
             _gameService = gameService;
         }
-
 
         [Authorize]
         [HttpGet]

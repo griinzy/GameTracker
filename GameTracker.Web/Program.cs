@@ -30,7 +30,7 @@ public class Program
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
-        builder.Services.AddScoped<GameService>();
+        builder.Services.AddScoped<IGameService, GameService>();
 
         builder.Services.AddControllersWithViews();
 

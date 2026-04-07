@@ -6,7 +6,7 @@ using Microsoft.Identity.Client;
 
 namespace GameTracker.Services
 {
-    public class GameService
+    public class GameService : IGameService
     {
         private readonly ApplicationDbContext _context;
 
