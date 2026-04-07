@@ -167,6 +167,11 @@ namespace GameTracker.Services
                 .Include(g => g.Developer)
                 .FirstOrDefaultAsync(g => g.Id == id);
 
+            if(game == null)
+            {
+                return null;
+            }
+
             return new GameDetailsViewModel
             {
                 Id = game.Id,
@@ -185,6 +190,11 @@ namespace GameTracker.Services
                .Include(g => g.Developer)
                .FirstOrDefaultAsync(g => g.Id == id);
 
+            if (game == null)
+            {
+                return null;
+            }
+
             return new GameEditViewModel
             {
                 Id = game.Id,
@@ -202,6 +212,11 @@ namespace GameTracker.Services
               .Include(g => g.Genre)
               .Include(g => g.Developer)
               .FirstOrDefaultAsync(g => g.Id == id);
+
+            if (game == null)
+            {
+                return null;
+            }
 
             return new GameDeleteViewModel
             {
