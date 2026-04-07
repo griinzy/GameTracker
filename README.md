@@ -14,9 +14,39 @@ GameTracker is a web application that allows users to browser video games, save 
 
 ## Technologies Used
 - ASP.NET Core MVC
+- ASP.NET Identity
 - Entity Framework Core with SQL Server
 - Razor Pages
 - Bootstrap 5
+
+## Architecture
+The project is split into multiple projects.
+
+## Layers
+### GameTracker.Web
+The main ASP.NET Core Application.
+
+### GameTracker.Services
+The business logic of the application.
+
+### GameTracker.Data
+Responsible for database access.
+
+### GameTracker.ViewModels
+Used for data transfer between the UI and backend.
+
+### GameTracker.Common
+Contains the constraints of the models.
+
+### GameTracker.UnitTests
+Contains Unit tests.
+
+## Seeding
+The database is seeded in `ApplicationDbContext`.
+Seeded data includes 11 games, 5 genres and 5 developers.
+
+## Test Coverage
+Tests include the Game and Admin controllers, as well as the fetching of games, game details, genres, developers, adding games, genres, developers, deleting games in GameService.
 
 ## Setup Instructions
 1. Open the solution with Visual Studio.
@@ -33,4 +63,4 @@ GameTracker is a web application that allows users to browser video games, save 
     - You need to register an account so add, edit or remove games.
 
 ### Notes
-- Seeded data includes 5 games, 5 genres and 5 developers.
+- An admin user is included with email `admin@mail.com` and password `admin123`.
