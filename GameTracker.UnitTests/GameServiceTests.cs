@@ -1,7 +1,9 @@
 ﻿using GameTracker.Data;
 using GameTracker.Data.Models;
 using GameTracker.Services;
+using GameTracker.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace GameTracker.UnitTests
 {
@@ -106,9 +108,113 @@ namespace GameTracker.UnitTests
         }
 
         [Test]
-        public void GetAllGamesAsync_ReturnsCorrectNumberOfGames()
+        public async Task GetAllGamesAsync_ReturnsCorrectNumberOfGames()
         {
-            Assert.Pass();
+            var result = await _gameService.GetAllGamesAsync();
+            Assert.That(result.Count(), Is.EqualTo(5));
+        }
+
+        [Test]
+        public async Task GetAllGamesPaginatedAsync() 
+        {
+            var result = await _gameService.GetAllGamesPaginatedAsync(1, 3);
+            Assert.That(result.Games.Count(), Is.EqualTo(3));
+        }
+
+        [Test]
+        public async Task GetAllGamesPaginatedAsync_ReturnsCorrectTotalPages()
+        {
+            var result = await _gameService.GetAllGamesPaginatedAsync(1, 3);
+            Assert.That(result.TotalPages, Is.EqualTo(2));
+        }
+
+        [Test]
+        public async Task GetAllGamesPaginatedAsync_SearchByTitle_ReturnsMatchingGames()
+        {
+            var result = await _gameService.GetAllGamesPaginatedAsync(searchTitle: "Hollow");
+            Assert.That(result.Games.Count(), Is.EqualTo(1));
+            Assert.That(result.Games.First().Title, Is.EqualTo("Hollow Knight"));
+        }
+
+        [Test]
+        public async Task GetAllGamesPaginatedAsync_FilterByGenre_ReturnsMatchingGames()
+        {
+            var result = await _gameService.GetAllGamesPaginatedAsync(genreId: 1);
+            Assert.That(result.Games.Count(), Is.EqualTo(1));
+            Assert.That(result.Games.First().Title, Is.EqualTo("Bloodborne"));
+        }
+
+        [Test]
+        public async Task GetGenresAsync_ReturnsAllGenres()
+        {
+            var result = await _gameService.GetGenresAsync();
+            Assert.That(result.Count(), Is.EqualTo(5));
+        }
+
+        [Test]
+        public async Task GetDevelopersAsync_ReturnsAllDevelopers()
+        {
+            var result = await _gameService.GetDevelopersAsync();
+            Assert.That(result.Count(), Is.EqualTo(5));
+        }
+
+        [Test]
+        public async Task AddGameAsync_AddsGameToDatabase()
+        {
+            var model = new GameTracker.ViewModels.GameCreateViewModel
+            {
+                Title = "Test Title",
+                Description = "Test Description",
+                ImageUrl = "",
+                GenreId = 1,
+                DeveloperId = 1
+            };
+
+            await _gameService.AddGameAsync(model);
+            Assert.That(_context.Games.Count(), Is.EqualTo(6));
+        }
+
+        [Test]
+        public async Task AddGenreAsync_AddsGenreToDatabase()
+        {
+            await _gameService.AddGenreAsync(new CreateGenreViewModel { Name = "Test Genre" });
+            Assert.That(_context.Genres.Count(), Is.EqualTo(6));
+        }
+
+        [Test]
+        public async Task AddDeveloperAsync_AddsDeveloperToDatabase()
+        {
+            await _gameService.AddDeveloperAsync(new CreateDeveloperViewModel { Name = "Test Developer" });
+            Assert.That(_context.Developers.Count(), Is.EqualTo(6));
+        }
+
+        [Test]
+        public async Task GetGameDetailsByIdAsync_ReturnsCorrectGame()
+        {
+            var result = await _gameService.GetGameDetailsByIdAsync(1);
+            Assert.That(result.Title, Is.EqualTo("Bloodborne"));
+        }
+
+        [Test]
+        public async Task GetGameDetailsByIdAsync_ReturnsCorrectGenreAndDeveloper()
+        {
+            var result = await _gameService.GetGameDetailsByIdAsync(1);
+            Assert.That(result.Genre, Is.EqualTo("Action RPG"));
+            Assert.That(result.Developer, Is.EqualTo("FromSoftware"));
+        }
+
+        [Test]
+        public async Task DeleteGameAsync_RemovesGameFromDatabase()
+        {
+            await _gameService.DeleteGameAsync(1);
+            Assert.That(_context.Games.Count(), Is.EqualTo(4));
+        }
+
+        [Test]
+        public async Task DeleteGameAsync_CorrectGameIsRemoved()
+        {
+            await _gameService.DeleteGameAsync(1);
+            Assert.That(_context.Games.Any(g => g.Id == 1), Is.False);
         }
     }
 }
